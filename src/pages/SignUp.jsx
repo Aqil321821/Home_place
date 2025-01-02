@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
 import { db } from '../firebase.config';
 import { ReactComponent as ArrowRightIcon } from '../assets/svg/keyboardArrowRightIcon.svg';
@@ -30,18 +31,20 @@ const SignUp = () => {
       const auth = getAuth();
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      updateProfile(auth.currentUser, {
+      await updateProfile(auth.currentUser, {
         displayName: name,
       });
-
+      console.log(user);
       const formDataCopy = { ...formData };
       delete formDataCopy.password;
-      formDataCopy.timestamp = serverTimestamp;
+      formDataCopy.timestamp = serverTimestamp();
       await setDoc(doc(db, 'users', user.uid), formDataCopy);
 
       navigate('/');
     } catch (error) {
-      console.log(error);
+      toast.error('Something Went Wrong !');
+      console.error('Error Code:', error.code);
+      console.error('Error Message:', error.message);
     }
   };
 
@@ -70,7 +73,7 @@ const SignUp = () => {
 
             <div className='signUpBar'>
               <p className='signUpText'>Sign Up</p>
-              <button className='signUpButton'>
+              <button className='signUpButton' type='submit'>
                 <ArrowRightIcon fill='#ffffff' height='34px' width='34px' />
               </button>
             </div>
