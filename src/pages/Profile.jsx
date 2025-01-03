@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getAuth, updateProfile } from 'firebase/auth';
 import { updateDoc, doc } from 'firebase/firestore';
@@ -66,8 +66,14 @@ const Profile = () => {
         </div>
         <div className='profileCard'>
           <form>
-            <input type='text' id='name' value={name} onChange={onChange} disabled={!changeDetails} className={!changeDetails ? 'profileName' : 'profileNameActive'} />
-            <input type='text' id='email' value={email} onChange={onChange} disabled={!changeDetails} className={!changeDetails ? 'profileName' : 'profileNameActive'} />
+            <input type='text' id='name' value={name}
+             onChange={onChange} disabled={!changeDetails}
+              className={!changeDetails ? 'profileName' : 'profileNameActive'} />
+
+            <input type='text' id='email'
+             value={email} onChange={onChange}
+             disabled={!changeDetails}
+              className={!changeDetails ? 'profileName' : 'profileNameActive'} />
           </form>
         </div>
       </main>

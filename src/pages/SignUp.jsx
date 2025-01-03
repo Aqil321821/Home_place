@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 import { db } from '../firebase.config';
 import { ReactComponent as ArrowRightIcon } from '../assets/svg/keyboardArrowRightIcon.svg';
 import visibiltyIcon from '../assets/svg/visibilityIcon.svg';
+import OAuth from '../components/OAuth';
+
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -34,7 +36,7 @@ const SignUp = () => {
       await updateProfile(auth.currentUser, {
         displayName: name,
       });
-      console.log(user);
+      // console.log(user);
       const formDataCopy = { ...formData };
       delete formDataCopy.password;
       formDataCopy.timestamp = serverTimestamp();
@@ -80,6 +82,7 @@ const SignUp = () => {
           </form>
 
           {/* Google Sign In */}
+          <OAuth />
 
           <Link to='/sign-in' className='registerLink'>
             Sign In Instead !
